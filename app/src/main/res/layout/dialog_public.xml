@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center"
+              android:layout_marginLeft="30dp"
+              android:layout_marginRight="30dp"
+              android:background="@drawable/lay_corners_bg"
+              android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_title"
+        style="@style/lay_ct_text"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:text="提示"
+        android:textSize="18dp"/>
+
+
+    <TextView
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/tv_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:lineSpacingExtra="3dp"
+        android:gravity="center"
+        android:padding="25dp"
+        android:paddingBottom="25dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="齐啪发布新版本啦，快快去升级^_^"
+        android:textColor="@android:color/black"
+        android:textSize="16dp"/>
+
+    <View
+        style="@style/line_hor"
+        android:background="#D5D5D5"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_horizontal">
+
+        <LinearLayout
+            android:id="@+id/lay_close"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_close"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:text="暂不升级"
+                android:textColor="@android:color/black"
+                android:textSize="18dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lay_conform"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <View
+                style="@style/line_ver"
+                android:background="#D5D5D5"/>
+
+            <Button
+                android:id="@+id/btn_conform"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:text="马上升级"
+                android:textColor="@color/color_3897e7"
+                android:textSize="18dp"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
