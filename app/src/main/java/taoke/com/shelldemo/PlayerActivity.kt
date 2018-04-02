@@ -2,22 +2,22 @@ package taoke.com.shelldemo
 
 import android.content.Context
 import android.content.Intent
-import android.content.pm.ActivityInfo
-import android.content.res.Configuration
 import android.os.Bundle
-import android.util.Log
-import android.view.*
-import android.webkit.*
+import android.view.KeyEvent
+import android.view.View
+import android.webkit.WebChromeClient
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import kotlinx.android.synthetic.main.activity_base.*
 import kotlinx.android.synthetic.main.activity_player.*
 import kotlinx.android.synthetic.main.layout_empty_page.*
 import kotlinx.android.synthetic.main.layout_top.*
 import taoke.com.shelldemo.base.BaseSubscriber
 import taoke.com.shelldemo.bean.BaseData
-import taoke.com.shelldemo.network.ApiUtils
 import taoke.com.shelldemo.bean.UrlBean
 import taoke.com.shelldemo.cons.hideProgress
 import taoke.com.shelldemo.cons.showProgress
+import taoke.com.shelldemo.network.ApiUtils
 
 
 class PlayerActivity : BaseActivity() {
@@ -173,6 +173,10 @@ class PlayerActivity : BaseActivity() {
                     view?.loadUrl(url)
                 }
                 return true
+            }
+
+            override fun onLoadResource(view: WebView?, url: String?) {
+                super.onLoadResource(view, url)
             }
 
             override fun onPageFinished(view: WebView?, url: String?) {

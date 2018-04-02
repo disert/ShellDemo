@@ -8,22 +8,25 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.*
-import android.webkit.*
+import android.webkit.HttpAuthHandler
+import android.webkit.WebChromeClient
+import android.webkit.WebView
+import android.webkit.WebViewClient
+import android.widget.LinearLayout
+import android.widget.PopupWindow
+import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_web.*
 import kotlinx.android.synthetic.main.layout_empty_page.*
 import kotlinx.android.synthetic.main.layout_top.*
+import kotlinx.android.synthetic.main.pop_layout.view.*
 import taoke.com.shelldemo.base.BaseSubscriber
 import taoke.com.shelldemo.bean.BaseData
 import taoke.com.shelldemo.bean.LinesBean
 import taoke.com.shelldemo.bean.Source
-import taoke.com.shelldemo.cons.loadImage
-import taoke.com.shelldemo.network.ApiUtils
-import android.widget.LinearLayout
-import android.widget.PopupWindow
-import android.widget.TextView
-import kotlinx.android.synthetic.main.pop_layout.view.*
 import taoke.com.shelldemo.cons.hideProgress
+import taoke.com.shelldemo.cons.loadImage
 import taoke.com.shelldemo.cons.showProgress
+import taoke.com.shelldemo.network.ApiUtils
 
 
 class WebActivity : BaseActivity() {
