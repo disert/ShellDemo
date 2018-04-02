@@ -1,6 +1,7 @@
 <resources>
-    <string name="app_name">ShellDemo</string>
+    <string name="app_name">辣椒视频</string>
 
     <string name="empty_empty">空空如也~</string>
     <string name="check_network_is_available">请检查网络状态</string>
+    <string name="back">&lt;返回</string>
 </resources>

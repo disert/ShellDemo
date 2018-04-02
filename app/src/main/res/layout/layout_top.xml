@@ -17,7 +17,8 @@
         android:padding="@dimen/top_icon_padding"/>
 
     <TextView
-        android:id="@+id/iv_right_text"
+        android:textColor="@android:color/white"
+        android:id="@+id/tv_right_text"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_alignParentRight="true"
@@ -25,16 +26,33 @@
         android:gravity="center_vertical"
         android:textSize="@dimen/top_right_size"/>
 
-    <ImageView
-        android:id="@+id/iv_back"
-        android:layout_width="@dimen/top_icon_size"
+    <TextView
+        android:text="@string/back"
+        android:id="@+id/tv_back"
+        android:gravity="center_vertical"
+        android:textColor="@android:color/white"
+        android:layout_width="wrap_content"
         android:layout_height="@dimen/top_icon_size"
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/top_left_padding"
-        android:padding="@dimen/top_icon_padding"
-        android:src="@mipmap/icon_back"/>
+        android:padding="@dimen/top_icon_padding"/>
+    <TextView
+        android:visibility="gone"
+        android:text="关闭"
+        android:id="@+id/tv_close"
+        android:textColor="@android:color/white"
+        android:layout_width="wrap_content"
+        android:textSize="12dp"
+        android:layout_height="@dimen/top_icon_size"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="55dp"/>
 
     <TextView
+        android:textColor="@android:color/white"
+        android:layout_marginLeft="80dp"
+        android:layout_marginRight="80dp"
+        android:ellipsize="end"
+        android:lines="1"
         android:id="@+id/tv_title"
         android:typeface="monospace"
         android:layout_width="wrap_content"

@@ -5,6 +5,8 @@ import android.app.Fragment
 import android.content.Context
 import android.net.ConnectivityManager
 import android.view.View
+import android.widget.ImageView
+import com.bumptech.glide.Glide
 import rx.Observable
 import rx.android.schedulers.AndroidSchedulers
 import rx.functions.Action1
@@ -13,6 +15,9 @@ import rx.schedulers.Schedulers
 import taoke.com.shelldemo.GlobalContext
 import taoke.com.shelldemo.utils.ToastManager
 import taoke.com.shelldemo.view.PublicDialog
+import taoke.com.shelldemo.view.CustomProgress
+
+
 
 /**
  * 作者：yl
@@ -106,6 +111,28 @@ fun Any.showSubmitDialog(context: Context, left: String, right: String, msg: Str
     dialog.show()
     return dialog
 }
+fun Activity.loadImage(url:String,imageView:ImageView){
+    Glide.with(this).load(url).into(imageView)
+}
 
+fun Fragment.loadImage(url:String,imageView:ImageView){
+    Glide.with(this).load(url).into(imageView)
+}
 
+private var mProgressDialog: CustomProgress? = null
+fun Activity.showProgress(message: String) {
+    if (null == mProgressDialog) {
+        mProgressDialog = CustomProgress
+                .show(this, message, true, null)
+    } else {
+        if (!mProgressDialog!!.isShowing) {
+            mProgressDialog!!.show()
+        }
+    }
+}
 
+fun Any.hideProgress() {
+    if (null != mProgressDialog && mProgressDialog!!.isShowing) {
+        mProgressDialog!!.dismiss()
+    }
+}

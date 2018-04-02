@@ -13,7 +13,7 @@ open class BaseActivity : AppCompatActivity(),View.OnClickListener {
     var view: View? = null
     override fun onClick(v: View?) {
         when(v?.id){
-            R.id.iv_back -> finish()
+            R.id.tv_back -> finish()
         }
     }
 
@@ -29,7 +29,7 @@ open class BaseActivity : AppCompatActivity(),View.OnClickListener {
         super.setContentView(view)
 
         emptyPage(false)
-        iv_back.setOnClickListener(this)
+        tv_back.setOnClickListener(this)
     }
 
     override fun onDestroy() {

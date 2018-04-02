@@ -60,7 +60,7 @@ class GlobalContext : Application() {
         //        FontsOverride.setDefaultFont(this, "MONOSPACE", "fonts/rtw_type.otf");
 
         //异常处理
-        val crashHandler = CrashHandler.getInstance()
+        val crashHandler = CrashHandler.instance
         crashHandler.init(applicationContext, crashLogDir)
 
         //友盟
