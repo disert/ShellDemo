@@ -2,22 +2,21 @@ package taoke.com.shelldemo
 
 import android.content.Context
 import android.content.Intent
-import android.content.pm.ActivityInfo
-import android.content.res.Configuration
+import android.net.Uri
 import android.os.Bundle
-import android.util.Log
-import android.view.*
-import android.webkit.*
+import android.view.KeyEvent
+import android.view.View
+import android.webkit.WebChromeClient
 import kotlinx.android.synthetic.main.activity_base.*
-import kotlinx.android.synthetic.main.activity_player.*
+import kotlinx.android.synthetic.main.activity_player1.*
 import kotlinx.android.synthetic.main.layout_empty_page.*
 import kotlinx.android.synthetic.main.layout_top.*
 import taoke.com.shelldemo.base.BaseSubscriber
 import taoke.com.shelldemo.bean.BaseData
-import taoke.com.shelldemo.network.ApiUtils
 import taoke.com.shelldemo.bean.UrlBean
 import taoke.com.shelldemo.cons.hideProgress
 import taoke.com.shelldemo.cons.showProgress
+import taoke.com.shelldemo.network.ApiUtils
 
 
 class Player1Activity : BaseActivity() {
@@ -40,7 +39,7 @@ class Player1Activity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_player)
+        setContentView(R.layout.activity_player1)
 
         targatUrl = intent.getStringExtra("url")
         interfaceUrl = intent.getStringExtra("interfaceUrl")
@@ -48,7 +47,6 @@ class Player1Activity : BaseActivity() {
 //        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
 
 
-        initWebView()
 
         initView()
 
@@ -88,8 +86,9 @@ class Player1Activity : BaseActivity() {
             }
 
             override fun onNext(t: BaseData<UrlBean>?) {
-                webView.loadUrl(t?.results?.url)
                 hideProgress()
+                videoView.setVideoURI(Uri.parse(t!!.results.url))
+                videoView.start()
             }
         })
     }
@@ -116,72 +115,6 @@ class Player1Activity : BaseActivity() {
     }
 
 
-    private fun initWebView() {
-        webView.settings.javaScriptEnabled = true
-
-        //设置自适应屏幕，两者合用
-        webView.settings.useWideViewPort = true //将图片调整到适合webview的大小
-        webView.settings.loadWithOverviewMode = true // 缩放至屏幕的大小
-        webView.settings.loadsImagesAutomatically = true
-        webView.settings.defaultTextEncodingName = "utf-8"
-
-
-        webView.webChromeClient = object : WebChromeClient() {
-            override fun onProgressChanged(view: WebView?, newProgress: Int) {
-                super.onProgressChanged(view, newProgress)
-//                if(newProgress == 100)
-//                    view?.loadUrl(getDomOperationStatements(arrayOf("s_tab", "page-tips")))
-            }
-
-            override fun onShowCustomView(view: View?, callback: CustomViewCallback?) {
-                webView.visibility = View.GONE
-                fl_container.visibility = View.VISIBLE
-                cover.visibility = View.GONE
-                fl_container.addView(view)
-                mCallback=callback
-
-                super.onShowCustomView(view, callback)
-            }
-
-            override fun onHideCustomView() {
-                fullScreen()
-                if (mCallback!=null){
-                    mCallback!!.onCustomViewHidden()
-                }
-                webView.visibility = View.VISIBLE
-                cover.visibility = View.VISIBLE
-                fl_container.removeAllViews()
-                fl_container.visibility = View.GONE
-
-                super.onHideCustomView()
-            }
-            private fun fullScreen() {
-//                requestedOrientation = if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
-//                    ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
-//                } else {
-//                    ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-//                }
-            }
-
-
-
-        }
-        webView.webViewClient = object : WebViewClient() {
-
-            override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
-                if (checkUrl(url)) {
-                    view?.loadUrl(url)
-                }
-                return true
-            }
-
-            override fun onPageFinished(view: WebView?, url: String?) {
-                super.onPageFinished(view, url)
-//                tv_cover.visibility = View.VISIBLE
-            }
-
-        }
-    }
 
 
     private fun checkUrl(url: String?): Boolean {

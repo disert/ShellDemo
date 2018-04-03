@@ -8,9 +8,9 @@
     tools:context="taoke.com.shelldemo.MainActivity">
 
 
-    <WebView
+    <VideoView
         android:background="@android:color/black"
-        android:id="@+id/webView"
+        android:id="@+id/videoView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
