@@ -57,22 +57,21 @@ class PlayerActivity : BaseActivity() {
 
     }
 
-//    override fun onConfigurationChanged(newConfig: Configuration?) {
-//        super.onConfigurationChanged(newConfig)
-//
-//        if(newConfig!!.orientation==Configuration.ORIENTATION_PORTRAIT){
-//            isLandscape = false
-//        }else if(newConfig!!.orientation==Configuration.ORIENTATION_LANDSCAPE){
-//            isLandscape = true
-//        }
-//    }
+    override fun onConfigurationChanged(newConfig: Configuration?) {
+        super.onConfigurationChanged(newConfig)
+
+        if(newConfig!!.orientation==Configuration.ORIENTATION_PORTRAIT){
+            isLandscape = false
+        }else if(newConfig!!.orientation==Configuration.ORIENTATION_LANDSCAPE){
+            isLandscape = true
+        }
+        runOnUiThread { orientationChange(isLandscape) }
+    }
     private fun orientationChange(isLandscape: Boolean){
         if(isLandscape){
-            top.visibility = View.GONE
-//            tv_cover.visibility = View.GONE
+            cover.visibility = View.GONE
         }else{
-            top.visibility = View.VISIBLE
-//            tv_cover.visibility = View.VISIBLE
+            cover.visibility = View.VISIBLE
         }
     }
 
@@ -89,6 +88,7 @@ class PlayerActivity : BaseActivity() {
 
             override fun onNext(t: BaseData<UrlBean>?) {
                 webView.loadUrl(t?.results?.url)
+                cover.visibility = View.VISIBLE
                 hideProgress()
             }
         })
@@ -97,19 +97,19 @@ class PlayerActivity : BaseActivity() {
     private fun initView() {
         tv_right_text.visibility = View.GONE
         ll_empty_root.visibility = View.GONE
-        tv_close.visibility = View.VISIBLE
-        tv_close.setOnClickListener(this)
         top.visibility = View.GONE
+//        tv_close.visibility = View.VISIBLE
+//        tv_close.setOnClickListener(this)
 //        tv_cover.visibility = View.GONE
 //        orientationChange(true)
     }
 
-    override fun onClick(v: View?) {
-        super.onClick(v)
-        when (v?.id) {
-            R.id.tv_close -> finish()
-        }
-    }
+//    override fun onClick(v: View?) {
+//        super.onClick(v)
+//        when (v?.id) {
+//            R.id.tv_close -> finish()
+//        }
+//    }
 
     fun back() {
         finish()

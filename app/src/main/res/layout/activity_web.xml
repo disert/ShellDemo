@@ -8,7 +8,7 @@
     tools:context="taoke.com.shelldemo.MainActivity">
 
 
-    <WebView
+    <taoke.com.shelldemo.view.ScrollWebView
         android:id="@+id/webView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

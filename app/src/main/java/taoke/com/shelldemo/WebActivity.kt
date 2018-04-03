@@ -3,6 +3,7 @@ package taoke.com.shelldemo
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
+import android.net.Uri
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -24,6 +25,7 @@ import android.widget.TextView
 import kotlinx.android.synthetic.main.pop_layout.view.*
 import taoke.com.shelldemo.cons.hideProgress
 import taoke.com.shelldemo.cons.showProgress
+import taoke.com.shelldemo.view.ScrollWebView
 
 
 class WebActivity : BaseActivity() {
@@ -74,7 +76,7 @@ class WebActivity : BaseActivity() {
             }
             R.id.tv_right_text -> showPop(v)
             R.id.tv_close -> {
-                if(mData?.site?.url != null) {
+                if (mData?.site?.url != null) {
                     webView.clearHistory()
                     webView.loadUrl(mData!!.site!!.url)
                     isShowBack(false)
@@ -136,15 +138,18 @@ class WebActivity : BaseActivity() {
         webView.settings.loadsImagesAutomatically = true
         webView.settings.defaultTextEncodingName = "utf-8"
 
+        webView.onScrollChangedCallback = object : ScrollWebView.OnScrollChangedCallback{
+            override fun onScroll(dx: Int, dy: Int) {
+                iv_player.scrollY = dy
+            }
 
+        }
         webView.webChromeClient = object : WebChromeClient() {
             override fun onProgressChanged(view: WebView?, newProgress: Int) {
                 super.onProgressChanged(view, newProgress)
 //                if(newProgress == 100)
 //                    view?.loadUrl(getDomOperationStatements(arrayOf("s_tab", "page-tips")))
             }
-
-
 
 
         }
@@ -176,10 +181,11 @@ class WebActivity : BaseActivity() {
 //        webView.loadUrl("http://v.22taoke.com")
     }
 
-    fun isShowBack(isShow: Boolean){
+    fun isShowBack(isShow: Boolean) {
         tv_back.visibility = if (isShow) View.VISIBLE else View.GONE
         tv_close.visibility = if (isShow) View.VISIBLE else View.GONE
     }
+
     fun loadFinish(url: String?) {
         isShowBack(webView.canGoBack())
         tv_title.text = webView.title
@@ -187,14 +193,19 @@ class WebActivity : BaseActivity() {
         //腾讯的
         if (url!!.startsWith("https://m.v.qq.com/x/cover")
                 || url!!.startsWith("https://m.v.qq.com/cover")
+                || url!!.startsWith("https://m.v.qq.com/play.html")
                 //爱齐艺
-                ||url!!.startsWith("http://m.iqiyi.com/v_")
+                || url!!.startsWith("http://m.iqiyi.com/v_")
                 //youku
-//                || url!!.startsWith("https://m.youku.com/video")
 //                || url!!.startsWith("http://m.youku.com/video")
                 || url!!.contains("m.youku.com/video/id_")
+                //tudou
+//                || url!!.startsWith("http://compaign.tudou.com/v")
+                //mangguo
+                || url!!.startsWith("https://m.mgtv.com/b")
                 //sohu
-                || url!!.contains("html") && url!!.contains("sohu.com")) {
+                || url!!.contains("tv.sohu.com/v")
+                || url!!.contains("film.sohu.com/album")) {
             iv_player.visibility = View.VISIBLE
             targatUrl = url
             Log.w("MainActivity", targatUrl)
@@ -205,12 +216,17 @@ class WebActivity : BaseActivity() {
         val curUrl = webView.url
         val linesUrl = mData!!.source[linePosition].url
         Log.w("MainActivity", linesUrl)
-        startActivity(PlayerActivity.newIntent(this,mData!!.site.video,curUrl,linesUrl))
+        startActivity(PlayerActivity.newIntent(this, mData!!.site.video, curUrl, linesUrl))
     }
 
     private fun checkUrl(url: String?): Boolean {
         if (url != null && url.startsWith("http")) {
             return true
+        }
+        if (url != null && !url.startsWith("http")) {
+//            val intent = Intent(Intent.ACTION_VIEW)
+//            intent.data = Uri.parse(url)
+//            startActivity(intent)
         }
         return false
     }
