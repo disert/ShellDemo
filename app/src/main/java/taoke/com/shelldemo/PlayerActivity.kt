@@ -2,6 +2,7 @@ package taoke.com.shelldemo
 
 import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
@@ -62,7 +63,7 @@ class PlayerActivity : BaseActivity() {
 
         if(newConfig!!.orientation==Configuration.ORIENTATION_PORTRAIT){
             isLandscape = false
-        }else if(newConfig!!.orientation==Configuration.ORIENTATION_LANDSCAPE){
+        }else if(newConfig!!.orientation== Configuration.ORIENTATION_LANDSCAPE){
             isLandscape = true
         }
         runOnUiThread { orientationChange(isLandscape) }
@@ -104,13 +105,11 @@ class PlayerActivity : BaseActivity() {
 //        orientationChange(true)
     }
 
-//    override fun onClick(v: View?) {
-//        super.onClick(v)
-//        when (v?.id) {
-//            R.id.tv_close -> finish()
-//        }
-//    }
-
+    override fun onDestroy() {
+        webView?.destroy()
+        fl_container?.removeAllViews()
+        super.onDestroy()
+    }
     fun back() {
         finish()
     }

@@ -24,6 +24,7 @@ import android.widget.TextView
 import kotlinx.android.synthetic.main.pop_layout.view.*
 import taoke.com.shelldemo.cons.hideProgress
 import taoke.com.shelldemo.cons.showProgress
+import taoke.com.shelldemo.view.ScrollWebView
 
 
 class WebActivity : BaseActivity() {
@@ -61,7 +62,7 @@ class WebActivity : BaseActivity() {
         tv_close.setOnClickListener(this)
 
         ll_empty_root.visibility = View.GONE
-        tv_back.visibility = View.GONE
+        tv_right_text.visibility = View.GONE
     }
 
     override fun onClick(v: View?) {
@@ -90,7 +91,7 @@ class WebActivity : BaseActivity() {
         } else {
             // 设置PopupWindow 显示的形式 底部或者下拉等
             // 在某个位置显示
-            mPopupWindow!!.showAtLocation(tv_right_text, Gravity.BOTTOM, 0, 0)
+            mPopupWindow!!.showAtLocation(tv_back, Gravity.BOTTOM, 0, 0)
             // 作为下拉视图显示
             // mPopupWindow.showAsDropDown(mPopView, Gravity.CENTER, 200, 300)
 
@@ -101,6 +102,9 @@ class WebActivity : BaseActivity() {
         if (webView.canGoBack()) {
             webView.goBack()
 //            iv_player.visibility = View.GONE
+        }else{
+            finish()
+            System.exit(0)
         }
     }
 
@@ -136,6 +140,11 @@ class WebActivity : BaseActivity() {
         webView.settings.loadsImagesAutomatically = true
         webView.settings.defaultTextEncodingName = "utf-8"
 
+        webView.onScrollChangedCallback = object : ScrollWebView.OnScrollChangedCallback{
+            override fun onScroll(dx: Int, dy: Int) {
+                iv_player.scrollY = dy
+            }
+        }
 
         webView.webChromeClient = object : WebChromeClient() {
             override fun onProgressChanged(view: WebView?, newProgress: Int) {
@@ -143,8 +152,6 @@ class WebActivity : BaseActivity() {
 //                if(newProgress == 100)
 //                    view?.loadUrl(getDomOperationStatements(arrayOf("s_tab", "page-tips")))
             }
-
-
 
 
         }
@@ -159,7 +166,7 @@ class WebActivity : BaseActivity() {
             }
 
             override fun onLoadResource(view: WebView?, url: String?) {
-//                Log.w("onLoadResource",url)
+                Log.w("onLoadResource",url)
                 super.onLoadResource(view, url)
             }
 
@@ -177,25 +184,28 @@ class WebActivity : BaseActivity() {
     }
 
     fun isShowBack(isShow: Boolean){
-        tv_back.visibility = if (isShow) View.VISIBLE else View.GONE
+//        tv_back.visibility = if (isShow) View.VISIBLE else View.GONE
         tv_close.visibility = if (isShow) View.VISIBLE else View.GONE
     }
     fun loadFinish(url: String?) {
         isShowBack(webView.canGoBack())
         tv_title.text = webView.title
         iv_player.visibility = View.GONE
+        tv_right_text.visibility = View.GONE
         //腾讯的
         if (url!!.startsWith("https://m.v.qq.com/x/cover")
                 || url!!.startsWith("https://m.v.qq.com/cover")
                 //爱齐艺
                 ||url!!.startsWith("http://m.iqiyi.com/v_")
+                //mangguo
+                || url!!.startsWith("https://m.mgtv.com/b/")
                 //youku
-//                || url!!.startsWith("https://m.youku.com/video")
 //                || url!!.startsWith("http://m.youku.com/video")
                 || url!!.contains("m.youku.com/video/id_")
                 //sohu
                 || url!!.contains("html") && url!!.contains("sohu.com")) {
             iv_player.visibility = View.VISIBLE
+            tv_right_text.visibility = View.VISIBLE
             targatUrl = url
             Log.w("MainActivity", targatUrl)
         }
