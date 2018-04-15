@@ -71,7 +71,12 @@ class WebActivity : BaseActivity() {
                 linked()
             }
             R.id.tv_back -> {
-                back()
+                if(webView.canGoBack()){
+                    webView.goBack()
+                }else{
+                    finish()
+                    System.exit(0)
+                }
             }
             R.id.tv_right_text -> showPop(v)
             R.id.tv_close -> {
@@ -95,16 +100,6 @@ class WebActivity : BaseActivity() {
             // 作为下拉视图显示
             // mPopupWindow.showAsDropDown(mPopView, Gravity.CENTER, 200, 300)
 
-        }
-    }
-
-    fun back() {
-        if (webView.canGoBack()) {
-            webView.goBack()
-//            iv_player.visibility = View.GONE
-        }else{
-            finish()
-            System.exit(0)
         }
     }
 
@@ -166,7 +161,11 @@ class WebActivity : BaseActivity() {
             }
 
             override fun onLoadResource(view: WebView?, url: String?) {
-                Log.w("onLoadResource",url)
+                if(url?.contains(".mp4") == true){
+                    Log.w("onLoadResource",url)
+                    view?.stopLoading()
+                    return
+                }
                 super.onLoadResource(view, url)
             }
 
@@ -225,16 +224,16 @@ class WebActivity : BaseActivity() {
         return false
     }
 
-    fun urlCtrl(url: String?): String? {
-        var split = url!!.replace("m.", "")
-        var result = split!!.split("html")[0] + "html"
-        return result
-    }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            back()
-            return true
+            if(webView.canGoBack()){
+                webView.goBack()
+                return true
+            }else{
+                finish()
+                System.exit(0)
+            }
         }
         return super.onKeyDown(keyCode, event)
     }

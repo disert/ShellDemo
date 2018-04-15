@@ -121,6 +121,7 @@ fun Fragment.loadImage(url:String,imageView:ImageView){
 
 private var mProgressDialog: CustomProgress? = null
 fun Activity.showProgress(message: String) {
+    if(isFinishing || isDestroyed)return
     if (null == mProgressDialog) {
         mProgressDialog = CustomProgress
                 .show(this, message, true, null)
